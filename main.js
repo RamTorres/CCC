@@ -125,7 +125,6 @@ let validateCred = cartao => {
   
         switch(PD) {
           case 3:
-            // Check if a value exists in the fruits array
             if(companhiasArr.indexOf("Amex (American Express)") === -1){
                 companhiasArr.push("Amex (American Express)");
             } 
