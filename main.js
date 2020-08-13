@@ -24,7 +24,141 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
-
+let validateCred = cartao => {
+    let j = cartao.length - 1;
+    //console.log(j);
+  
+    // array para armazenar os novos valores
+    let novoArr = [];
+    let resultado = 0;
+    if(j === 15) {
+      // percorrer o cartão
+      for(let i = j; i >= 0; i--) {
+        //console.log(`${cartao[i]} de índice ${i}`);
+  
+        // condição para saber se a posição do array é igual a 15
+        if(i === 15) {
+          
+          novoArr.push(cartao[i]);
+          resultado += cartao[i];
+  
+        } else {
+  
+          if(i % 2 == 0) {
+  
+            // Par
+            var dobro = cartao[i] * 2;
+            if (dobro > 9) {
+              dobro -= 9;
+              novoArr.push(dobro);
+              resultado += dobro;
+            } else {
+              novoArr.push(dobro);
+              resultado += dobro;
+            }
+            
+          } else {
+  
+            // Ímpar
+            novoArr.push(cartao[i]);
+            resultado += cartao[i];
+  
+          }
+  
+        }
+        
+      }
+  
+      /*console.log(`Novo Array: ${novoArr}`);
+      console.log(`Soma: ${resultado}`);*/
+      //console.log(`Resultado final: ${resultado%10}`);
+      var resultadoF = resultado % 10;
+  
+      if(resultadoF == 0) {
+        return true;
+      } else {
+        return false;
+      }
+  
+    } else {
+  
+      if(j > 15) {
+        return 'Este cartão possui mais de 16 dígitos!';
+      } else if(j < 15) {
+        return 'Este cartão possui menos de 16 dígitos!';
+      } else {
+        return 'Este cartão está possuído!';
+      }
+      
+    }
+    
+  }
+  
+  // console.log(validateCred(valid1));
+  
+  let findInvalidCards = cartoes => {
+    let fArray = [];
+    for(let i = 0; i < cartoes.length; i++) {
+      let resposta = validateCred(cartoes[i]);
+      //console.log(`${resposta} ${'\n'}`);
+  
+      if(resposta === false) {
+        fArray.push(cartoes[i]);
+      }
+    }
+  
+    return fArray;
+  }
+  
+  // console.log(findInvalidCards(batch));
+  
+  let idInvalidCardCompanies = cartoes => {
+  
+    let companhiasArr = [];
+  
+    for(let i = 0; i < cartoes.length; i++) {
+  
+      // PD -> Primeiro Dígito do Cartão
+      let PD = cartoes[i][0];
+  
+      if(PD === 3 || PD === 4 || PD === 5 || PD === 6) {
+  
+        switch(PD) {
+          case 3:
+            // Check if a value exists in the fruits array
+            if(companhiasArr.indexOf("Amex (American Express)") === -1){
+                companhiasArr.push("Amex (American Express)");
+            } 
+            break;
+          case 4:
+            if(companhiasArr.indexOf("Visa") === -1){
+                companhiasArr.push("Visa");
+            } 
+            break;
+          case 5:
+            if(companhiasArr.indexOf("Mastercard") === -1){
+                companhiasArr.push("Mastercard");
+            } 
+            break;
+          case 6:
+            if(companhiasArr.indexOf("Discover") === -1){
+                companhiasArr.push("Discover");
+            } 
+            break;
+          default:
+            console.log('Companhia não encontrada');
+        }// end switch
+  
+      }// end if 
+  
+    }// end for
+  
+    console.log(companhiasArr);
+  
+  }// end function
+  
+  let cartoesInvalidos = findInvalidCards(batch);
+  idInvalidCardCompanies(cartoesInvalidos);
 
 
 
